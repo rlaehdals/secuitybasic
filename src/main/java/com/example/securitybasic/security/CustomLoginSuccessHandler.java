@@ -7,6 +7,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
@@ -15,6 +16,9 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String email = authentication.getName();
+        HttpSession session = request.getSession();
+        session.setAttribute("email",email);
         response.sendRedirect("/success");
     }
 }

@@ -7,6 +7,9 @@ import com.example.securitybasic.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -25,8 +28,10 @@ public class UserController {
     }
 
     @PostMapping("/character")
-    public String create(@RequestParam(name = "email") String email,
-                         @RequestParam(name = "name") String name){
+    public String create(@RequestParam(name = "name") String name,
+                         HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        String email = (String) session.getAttribute("email");
         Character character = userService.createCharacter(name, email);
         return "ok";
     }
