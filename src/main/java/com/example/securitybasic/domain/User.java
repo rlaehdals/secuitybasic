@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user")
